@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Signup Complete</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .landing-container {
+      max-width: 900px;
+      margin: 50px auto;
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #007BFF;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .nav-buttons {
+      margin-top: 30px;
+    }
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      background-color: #007BFF;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button.secondary {
+      background-color: #6c757d;
+    }
+    button.secondary:hover {
+      background-color: #5a6268;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #888;
+    }
+    ul {
+      text-align: left;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <h1>Welcome to Our System!</h1>
+    <p>Thank you for completing the signup/application form. Your information has been successfully submitted.</p>
+    <p>Kindly submit your ownership document to the Municipal office Department of Agriculture, Villanueva for further validation and membership approval. Bring the following documents:</p>
+    <ul>
+      <li>Certificate of Land Transfer</li>
+      <li>Emancipation Patent</li>
+      <li>Individual Certificate of Land Ownership Award (CLOA)</li>
+      <li>Collective CLOA</li>
+      <li>Co-ownership CLOA</li>
+      <li>Agricultural sales patent</li>
+      <li>Homestead patent</li>
+      <li>Free Patent</li>
+      <li>Certificate of Title or Regular Title</li>
+      <li>Certificate of Ancestral Domain Title</li>
+      <li>Certificate of Ancestral Land Title</li>
+    </ul>
+    <div class="nav-buttons">
+     
+      <button class="secondary" onclick="navigateTo('home')">OK</button>
+    </div>
+    <footer>
+      <p>&copy; 2025 Corn Farmers Registry. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      switch (page) {
+        case 'dashboard':
+          window.location.href = "dashboard.html";
+          break;
+        case 'profile':
+          window.location.href = "profile.html";
+          break;
+        case 'home':
+          window.location.href = "index.html";
+          break;
+        default:
+          alert("Unknown destination!");
+      }
+    }
+  </script>
+</body>
+</html>

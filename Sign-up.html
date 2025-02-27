@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Registry and Monitoring System</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
+ <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #137731;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+        width: 100%;
+        background-color: #137731;
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        justify-content: space-around;
+        align-content: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 120px;
+            margin-right: 80px;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 1.2rem;
+        }
+
+        .nav-right a:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-container {
+        text-align: center;
+        margin-top: 120px; /* Increased margin to create more space below the navbar */
+        margin-bottom: 20px;
+    }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            line-height: 1.2;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            margin-top: 10px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        max-width: 800px;
+        text-align: left;
+        margin: 20px auto;
+        /* Added min-height to ensure buttons stay inside the container */
+        min-height: 600px; /* Adjust as needed */
+        position: relative; /* To position buttons absolutely */
+    }
+
+    input,
+select,
+button {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 20px; /* Added margin to separate from other elements */
+}
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .land-ownership {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .remove-icon {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #f44336;
+    margin-left: 10px;
+    display: inline-block; /* Allow both icon and text to be inline */
+    transition: color 0.3s ease;
+}
+
+.remove-icon:hover {
+    color: #d32f2f;
+}
+
+.remove-icon span {
+    font-size: 0.8em;
+    vertical-align: middle;
+    margin-left: 5px;
+    display: none; /* Initially hide the text */
+}
+
+/* Initially hide remove icons */
+.remove-icon {
+  display: none;
+}
+
+/* Style for add button */
+#addLandButton {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: block; /* Makes it a block-level element */
+    width: fit-content; /* Adjusts width to fit content */
+}
+#addLandButton:hover {
+    background-color: #45a049;
+}
+        @media (max-width: 768px) {
+            .welcome-container {
+                margin-top: 50px;
+                margin-bottom: 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+            .form-container {
+        padding: 20px;
+        max-height: 90vh;
+        min-height: 500px; /* Adjust as needed for smaller screens */
+    }
+    .form-container p {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+        .form-container p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="LOGO1.png" alt="Project Logo" class="logo">
+            <h1 style="color: white;">ARMS</h1>
+        </div>
+        <div class="nav-right">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+
+    <div class="welcome-container">
+        <div class="form-container">
+            <h1>Signup Form</h1>
+            <h2>Register your details</h2>
+            <form id="signupForm">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="middleInitial">Middle Initial:</label>
+                <input type="text" id="middleInitial" name="middleInitial" required>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="rsbaNumber">RSBA Number:</label>
+                <input type="number" id="rsbaNumber" name="rsbaNumber" required>
+                <label for="contactNumber">Contact Number (+63 format):</label>
+                <input type="text" id="contactNumber" name="contactNumber" required>
+                <label for="barangay">Barangay:</label>
+                <select id="barangay" name="barangay" required>
+                    <option value="" disabled selected>Select your Barangay</option>
+                    <option>Balacanas</option>
+                    <option>Dayawan</option>
+                    <option>Katipunan</option>
+                    <option>Kimaya</option>
+                    <option>Poblacion 1</option>
+                    <option>Poblacion 2</option>
+                    <option>Poblacion 3</option>
+                    <option>San Martin</option>
+                    <option>Tambobong</option>
+                    <option>Imelda</option>
+                    <option>Looc</option>
+                </select>
+                <label for="homeAddress">Home Address:</label>
+                <input type="text" id="homeAddress" name="homeAddress" required>
+            
+                <div id="landOwnershipFields">
+                    <div class="land-ownership">
+                        <label for="landOwnershipType1">Land Ownership Type:</label>
+                        <select id="landOwnershipType1" name="landOwnershipType[]" required>
+                            <option value="" disabled selected>Select Ownership Type</option>
+                            <option value="Owned">Owned</option>
+                            <option value="Leased">Leased</option>
+                            <option value="Rented">Rented</option>
+                        </select>
+                        <label for="landSize1">Land Size (hectares):</label>
+                        <input type="number" id="landSize1" name="landSize[]" required>
+                        <label for="landLocation1">Land Location:</label>
+                        <input type="text" id="landLocation1" name="landLocation[]" required>
+ 
+                    </div>
+                </div>
+                <button type="button" id="addLandButton">Add another land description</button>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <button type="submit">Signup</button>
+                <div>
+                    <p>
+                        By clicking the Submit button, you agree to our <br />
+                        <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+                    </p>
+                </div>
+            </form>
+            <p>Already have an account? <a href="index.html">Login</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", (event) => {
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Password Mismatch!',
+            text: 'Ensure your passwords match.',
+        });
+    }
+});
+
+document.getElementById("contactNumber").addEventListener("input", function () {
+    let value = this.value.trim();
+    if (!/^(\+63|0)[9]\d{9}$/.test(value)) {
+        this.setCustomValidity("Enter a valid Philippine mobile number (e.g., +639XXXXXXXXX or 09XXXXXXXXX)");
+    } else {
+        this.setCustomValidity("");
+    }
+});
+
+
+    </script>
+    <script>
+const landOwnershipFieldsContainer = document.getElementById('landOwnershipFields');
+const addLandButton = document.getElementById('addLandButton');
+let landOwnershipCounter = 2;
+
+addLandButton.addEventListener('click', () => {
+    const newLandOwnership = document.createElement('div');
+    newLandOwnership.classList.add('land-ownership');
+    newLandOwnership.dataset.index = landOwnershipCounter;
+    newLandOwnership.innerHTML = `
+        <span class="remove-icon">&#8722; <span>Remove</span></span>
+        <label for="landOwnershipType${landOwnershipCounter}">Land Ownership Type:</label>
+        <select id="landOwnershipType${landOwnershipCounter}" name="landOwnershipType[]" required>
+            <option value="" disabled selected>Select Ownership Type</option>
+            <option value="Owned">Owned</option>
+            <option value="Leased">Leased</option>
+            <option value="Rented">Rented</option>
+        </select>
+        <label for="landSize${landOwnershipCounter}">Land Size (hectares):</label>
+        <input type="number" id="landSize${landOwnershipCounter}" name="landSize[]" required>
+        <label for="landLocation${landOwnershipCounter}">Land Location:</label>
+        <input type="text" id="landLocation${landOwnershipCounter}" name="landLocation[]" required>
+    `;
+    landOwnershipFieldsContainer.appendChild(newLandOwnership);
+    landOwnershipCounter++;
+});
+
+// Handle remove button clicks
+landOwnershipFieldsContainer.addEventListener('click', (event) => {
+    const removeIcon = event.target.closest('.remove-icon');
+    if (removeIcon) {
+        const landOwnershipToRemove = removeIcon.closest('.land-ownership');
+        if (landOwnershipToRemove) {
+            landOwnershipToRemove.remove();
+            renumberRemoveButtons();
+        }
+    }
+});
+
+// Function to re-index land ownership sections
+function renumberRemoveButtons() {
+    const landSections = document.querySelectorAll('.land-ownership');
+    landSections.forEach((section, index) => {
+        section.dataset.index = index + 1;
+    });
+}
+document.getElementById('signupForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    removeEmptyLandSections();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    // Collect land ownership details manually
+    let landOwnership = [];
+    document.querySelectorAll(".land-ownership").forEach((section) => {
+        let type = section.querySelector("select[name='landOwnershipType[]']").value;
+        let size = section.querySelector("input[name='landSize[]']").value;
+        let location = section.querySelector("input[name='landLocation[]']").value;
+
+        if (type && size && location) {
+            landOwnership.push({ type, size, location });
+        }
+    });
+
+    // Convert land ownership array to JSON and append it
+    formData.append("landOwnership", JSON.stringify(landOwnership));
+
+    fetch('signup.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Please wait for admin approval before logging in.',
+                showConfirmButton: false,
+                timer: 3000
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: data.error || 'An error occurred.'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'An error occurred. Please try again.'
+        });
+        console.error('Error:', error);
+    });
+});
+
+
+
+// Function to remove empty land sections before submission
+function removeEmptyLandSections() {
+    document.querySelectorAll('.land-ownership').forEach(section => {
+        const inputs = section.querySelectorAll('input, select');
+        let isEmpty = Array.from(inputs).every(input => input.value.trim() === '');
+        if (isEmpty) {
+            section.remove();
+        }
+    });
+}
+
+
+    </script>

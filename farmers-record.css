@@ -1,0 +1,332 @@
+        
+        
+        
+        /* Basic styling */
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: rgb(247, 247, 247);
+        margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .header {
+                background-color: #4CAF50;
+                color: white;
+                text-align: center;
+        padding: 20px;
+                font-size: 2.5em;
+                word-wrap: break-word;
+    }
+
+            .nav-bar {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #333;
+                padding: 10px 20px;
+    }
+
+            .nav-bar a {
+                color: white;
+                text-decoration: none;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                transition: background-color 0.3s;
+    }
+
+            .nav-bar a:hover {
+                background-color: #575757;
+            }
+
+            .nav-bar i {
+                margin-right: 10px;
+                font-size: 20px;
+    }
+
+            .filter-container {
+            width: 100%;
+        text-align: center;
+            margin-bottom: 20px; /* Space between filter and activity feed */
+            padding: 10px;
+            background-color: #ffffff96;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slight shadow for visibility */
+            margin-top: 20px; /* Add margin on top to give it some space from the header */
+        }
+
+        .filter-container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+            /* Activity Feed */
+    .activity-feed {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .activity-item {
+        width: 300px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .activity-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+            .activity-item.approved::after {
+                content: "Approved";
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-color: rgba(76, 175, 80, 0.8);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 14px;
+                opacity: 0;
+                animation: fadeInOut 1s forwards;
+            }
+
+            @keyframes fadeInOut {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+    }
+
+    .activity-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+            .activity-item h3 {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        
+
+            /* Activity Summary Box Section */
+    .activity-summary {
+        width: 100%;
+        margin-top: 20px; /* Space between filter and activity summary */
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .activity-summary h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .activity-summary-boxes {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    /* Add hover effect and cursor change to summary boxes */
+    .summary-box {
+        width: 180px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f4f7fb;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        cursor: pointer; /* Make it look clickable */
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .summary-box:hover {
+        background-color: #e1f7e1; /* Highlight color when hovered */
+    }
+
+
+    .summary-box h4 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .summary-box p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4CAF50;
+    }
+
+
+            /* Full-Screen Image Modal */
+    .modal {
+        display: none;
+        position: fixed;
+                z-index: 10;
+        top: 0;
+                left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.9);
+                align-items: center;
+                justify-content: center;
+                color: white;
+    }
+
+            .modal-content {
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+                position: relative;
+            }
+
+            .modal-content img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+            
+
+            /* Responsive Styles */
+            @media screen and (max-width: 768px) {
+                .header {
+                    font-size: 1.8em;
+                    padding: 15px;
+                }
+
+                .nav-bar a {
+                    padding: 10px 15px;
+                }
+
+                .activity-feed {
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                }
+
+                .activity-item img {
+                    max-height: 130px;
+    }
+
+            }
+
+        
+            /* Filter Container */
+    .filter-container {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px; /* Space between filter and activity feed */
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slight shadow for visibility */
+        margin-top: 20px; /* Add margin on top to give it some space from the header */
+    }
+
+    .filter-container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .barangay-filter {
+        width: 250px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px; /* Space between the title and the dropdown */
+    }
+
+    .barangay-filter:hover {
+        border-color: #007bff;
+        background-color: #e9f5ff;
+    }
+
+    .activity-container {
+        max-width: 100%;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #2C3E50;
+    }
+
+
+
+    #container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #reportContainer {
+        margin-top: 30px;
+    }
+
+    h3 {
+        font-size: 1.5em;
+        color: #2980B9;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1.1em;
+        line-height: 1.5;
+        margin: 5px 0;
+    }
+
+    strong {
+        color: #2C3E50;
+    }
+
+    hr {
+        border: 1px solid #E4E4E4;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="ARMS LOGO.png" type="image/png">
+    <link rel="stylesheet" href="tepl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+      
+    <title>Farmers Portal</title>
+    <style>
+        /* General Reset */
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+:root {
+    --primary-color: #4CAF50; /* Green */
+    --secondary-color: #f0f0f0; /* Light Gray */
+    --accent-color: #2196F3; /* Blue */ /* Added accent color */
+    --spacing-unit: 15px;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    --font-size-base: 1rem;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around; /* Even spacing */
+    width: 90%; /* Adjust width */
+    max-width: 1200px; /* Max width for larger screens */
+    margin: 20px auto; /* Center horizontally */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+body {
+    display: flex;
+    min-height: 100vh; /* Ensure full viewport height */
+    background-color: var(--secondary-color);
+    color: #333;
+    font-family: 'Arial', sans-serif; /* Specify font family */
+}
+
+
+.profile-container {
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: var(--spacing-unit);
+    box-shadow: var(--shadow);
+    width: 30%;
+    min-width: 300px;
+}
+
+.profile-container img {
+    width: 150px; /* Larger profile image */
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--primary-color); /* Use CSS variable */
+    margin-bottom: var(--spacing-unit);
+}
+.profile-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.profile-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.profile-details strong {
+    color: var(--primary-color); /* Use CSS variable */
+}
+
+.profile-container button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.profile-container button:hover {
+    background-color: darken(var(--primary-color), 10%); /* Darker on hover */
+}
+
+.activity-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 var(--spacing-unit); /* Adjust margin */
+    padding: var(--spacing-unit);
+    background-color: #f0f0f03d;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    width: 65%; /* Adjust width */
+    align-items: stretch;
+}
+
+.activity-container h2 {
+    text-align: center;
+    font-size: 1.8rem; /* Larger heading */
+    margin-bottom: var(--spacing-unit);
+    color: var(--accent-color); /* Use accent color */
+}
+
+.activity-box {
+    flex-basis: calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+    margin: 10px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.activity-box i {
+    font-size: 2em; /* Larger icons */
+    margin-bottom: 5px;
+    margin-top: 20px; /* Adjust as needed */
+
+    color: var(--primary-color); /* Use primary color */
+}
+
+.activity-box h3 {
+    font-size: 1.2rem;
+    color: #333; /* Darker text */
+}
+
+.activity-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+.add-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-top: 15px; /* Adjusted margin-top */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.add-btn i {
+    font-size: 12px;
+}
+
+.add-btn:hover {
+    background: #45a049;
+}
+/* Responsive adjustments */
+@media (max-width: 1000px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .profile-container, .activity-container {
+        width: 100%;
+    }
+    .activity-box {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 600px) {
+    .activity-box {
+        flex: 0 0 calc(100% - 20px);
+    }
+}
+
+
+
+#profile-picture-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Add some spacing */
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#profile-picture-form button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.menu {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu a:hover {
+    background-color: #1abc9c; /* Light teal */
+    transform: scale(1.1);
+}
+
+.menu a:active {
+    background-color: #16a085; /* Darker teal */
+}
+
+@media (max-width: 600px) {
+    .menu {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .menu a {
+        display: block;
+        width: 100%;
+    }
+}
+
+.first-p {
+    color: white;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+
+
+    </style>
+</head>
+</head>
+<body>
+
+    <header>
+   <nav class="nav-bar">  <!-- Added class for styling -->
+        <div class="brand">
+            <img class="icon" src="LOGO1.png" alt="Corn Farmers Registry Logo">
+        </div>
+        <div class="menu">
+            <a href="#profile-section"></i> Profile</a>
+            <a href="#activities-section"></i> Activities</a>
+            <a href="#timeline-section"></i> Timeline</a>
+            <a href="logout.php"></i> Logout</a>
+        </div>
+    </nav>
+    <div class="main-container">  <!-- Added main-container -->
+
+
+        <div class="profile-container">
+            <h2>Profile Information</h2>
+            <img id="profilePic" src="default-avatar.png" alt="Profile Picture">
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>RSBA Number:</strong> <span id="rsbaNumber"></span></p>
+            <p><strong>Contact:</strong> <span id="contact"></span></p>
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Barangay:</strong> <span id="barangay"></span></p>
+            
+            <!-- Land Ownership Details -->
+            <p><strong>Land Ownership Type:</strong> <span id="landType"></span></p>
+            <p><strong>Land Size:</strong> <span id="landSize"></span> hectares</p>
+            <p><strong>Land Location:</strong> <span id="landLocation"></span></p>
+            
+    
+            <h3>Upload Profile Picture</h3>
+            <form id="profileForm" enctype="multipart/form-data">
+                <input type="file" name="profileImage" id="profileImage" required>
+                <button type="submit">Upload</button>
+            </form>
+            <p id="uploadMessage"></p>
+        </div>
+            
+
+    <div class="activity-container">
+        <div class="activity-box" data-location="land-prep.html">
+            <i class="fas fa-tractor"></i>
+            <h3>Land Preparation</h3>
+            <button class="add-btn" onclick="addActivity('Land Preparation')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+
+        </div>
+        <div class="activity-box" data-location="seedingForm.html">
+            <i class="fas fa-seedling"></i>
+            <h3>Seeding</h3>
+            <button class="add-btn" onclick="addActivity('Seeding')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+        </div>
+        <div class="activity-box" data-location="sprayingform.html">
+            <i class="fas fa-spray-can"></i>
+            <h3>Spraying</h3>
+            <button class="add-btn" onclick="addActivity('Spraying')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+        </div>
+        <div class="activity-box" data-location="weedingform.html">
+            <i class="fas fa-broom"></i>
+            <h3>Weeding</h3>
+            <button class="add-btn" onclick="addActivity('Weeding')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+        </div>
+        <div class="activity-box" data-location="fertilizing.html">
+            <i class="fas fa-seedling"></i>
+            <h3>Fertilizing</h3>
+            <button class="add-btn" onclick="addActivity('Fertilizing')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+        </div>
+        <div class="activity-box" data-location="harvesting.html">
+            <i class="fas fa-boxes"></i>
+            <h3>Harvesting</h3>
+            <button class="add-btn" onclick="addActivity('Harvesting')">
+                <i class="fas fa-plus"></i> Add Activity
+            </button>
+        </div>
+    </div>
+</header>
+
+
+
+    <script>
+document.querySelectorAll(".activity-box").forEach(box => {
+    box.addEventListener("click", function () {
+        window.location.href = this.getAttribute("data-location");
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    fetchUserProfile();
+});
+
+function fetchUserProfile() {
+    fetch('fetch_logged_in_user.php')
+        .then(response => response.json())
+        .then(user => {
+            if (user.success) {
+                // Ensure elements exist before setting values
+                if (document.getElementById("rsbaNumber")) 
+                    document.getElementById("rsbaNumber").innerText = user.rsbaNumber;
+                
+                if (document.getElementById("name")) 
+                    document.getElementById("name").innerText = user.firstName + " " + user.lastName;
+                
+                if (document.getElementById("address")) 
+                    document.getElementById("address").innerText = user.homeAddress;
+                
+                if (document.getElementById("contact")) 
+                    document.getElementById("contact").innerText = user.contactNumber;
+                
+                if (document.getElementById("barangay")) 
+                    document.getElementById("barangay").innerText = user.barangay;
+                
+                if (document.getElementById("landType")) 
+                    document.getElementById("landType").innerText = user.landType || "N/A";
+                
+                if (document.getElementById("landSize")) 
+                    document.getElementById("landSize").innerText = user.landSize || "0";
+                
+                if (document.getElementById("landLocation")) 
+                    document.getElementById("landLocation").innerText = user.landLocation || "N/A";
+                
+                if (user.profileImage && document.getElementById("profilePic")) {
+                    document.getElementById("profilePic").src = user.profileImage;
+                }
+            } else {
+                Swal.fire("Error", "Failed to fetch user profile", "error");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching profile:", error);
+            Swal.fire("Error", "An error occurred while fetching profile", "error");
+        });
+}
+
+// Profile Picture Upload
+document.getElementById("profileForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    let formData = new FormData();
+    let fileInput = document.getElementById("profileImage");
+
+    if (fileInput.files.length === 0) {
+        Swal.fire("Warning", "Please select a file!", "warning");
+        return;
+    }
+
+    formData.append("profileImage", fileInput.files[0]);
+
+    fetch("upload_profile_picture.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("profilePic").src = data.image;
+            Swal.fire("Success", "Profile picture uploaded successfully!", "success");
+        } else {
+            Swal.fire("Error", data.message, "error");
+        }
+    })
+    .catch(error => {
+        console.error("Error uploading file:", error);
+        Swal.fire("Error", "An error occurred while uploading the file", "error");
+    });
+});
+
+    </script>
+
+</body>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:info@cornfarmersregistry.com">info@cornfarmersregistry.com</a></p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <ul class="socials">
+          <!-- We'll add the links here -->
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Feedback</h3>
+        <p>We'd love to hear from you! <a href="feedback.html">Give us your feedback.</a></p>
+      </div>
+    </div>
+    <h1>Agriculture Registry and Monitoring System</h1>
+    <p class="first-p">
+      The Agriculture Registry and Monitoring System is a digital platform designed to streamline the management and distribution of government support services to corn farmers. The system serves as a centralized registry where farmers can sign up and update their personal, farm, and crop details. It also tracks the delivery of government assistance, including cash subsidies, farm inputs like fertilizers and seeds, farm equipment, and other support services. The system provides an easy and efficient way for corn farmers to register and document their farming activities, tools for monitoring and managing the distribution of resources to farmers, and improves transparency and accuracy in reporting on the assistance provided.
+    </p>
+    <p class="first-p">
+      © 2024 ARMS. All rights reserved.
+    </p>
+  </footer>
+  <script>
+    const socialLinks = [
+      { "url": "https://facebook.com", "url_content": "Facebook" },
+      { "url": "https://twitter.com", "url_content": "Twitter" },
+      { "url": "https://instagram.com", "url_content": "Instagram" },
+      // Add more social media links as needed
+    ];
+    const socialsList = document.querySelector(".socials");
+    socialLinks.forEach(link => {
+      const listItem = document.createElement("li");
+      const linkElement = document.createElement("a");
+      linkElement.href = link.url;
+      linkElement.target = "_blank"; // Open links in a new tab
+      linkElement.innerHTML = `<i class="fab fa-${link.url_content.toLowerCase()}"></i> ${link.url_content}`;
+      listItem.appendChild(linkElement);
+      socialsList.appendChild(listItem);
+    });
+  </script>
+ 
+  </footer>
+</html>

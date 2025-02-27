@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Approval</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.6.0/jspdf.plugin.autotable.min.js"></script>    <style>
+/* General Styles */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    color: #333;
+    }
+    .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            transition: 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+        .sidebar h2, .sidebar span {
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar.collapsed h2, .sidebar.collapsed span {
+            display: none;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .sidebar.collapsed ul li {
+            justify-content: center;
+        }
+
+/* Main Content */
+.container {
+    margin-left: 250px;
+            padding: 20px;
+            width: 100%;
+            transition: 0.3s;
+}
+
+.container.expanded {
+            margin-left: 60px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            .sidebar h2, .sidebar span {
+                display: none;
+            }
+            .container {
+                margin-left: 60px;
+            }
+        }
+
+.container h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.container h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+
+.barangay-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* Use gap for spacing between buttons */
+    margin-bottom: 20px;
+}
+
+.barangay-nav button {
+    background-color: #f1f2f4;
+    border: none;
+    padding: 10px 15px;
+    color: #333; /* Dark gray text color */
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    max-width: 120px;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.barangay-nav button:hover {
+    background-color: #353c41; /* Darker background on hover */
+}
+
+.barangay-nav button .count {
+    font-size: 12px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.buttons button {
+    background-color: #f0f0f0; /* Light gray background */
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 8px 12px;
+    margin: 5px;
+    color: #333; /* Dark gray text */
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #ddd; /* Slightly darker gray on hover */
+}
+
+/* Table Styles */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Add horizontal scrolling for tables wider than container */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Menu List */
+#menuList {
+    list-style: none; /* More concise */
+    padding: 0; /* Remove default padding */
+}
+
+#menuList li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#menuList li:hover {
+    background-color: #34495e;
+}
+
+
+/* Search Bar */
+#searchBar {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Sorting Icons */
+.sort-icons {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.sort-icons i {
+    font-size: 18px;
+    color: #16a085;
+    cursor: pointer;
+}
+
+.sort-icons i:hover {
+    color: #1abc9c;
+}
+
+
+/* Refresh Button */
+.refresh-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+#refreshButton {
+    background-color: #ffffff;
+    color: rgb(2, 1, 1);
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#refreshButton:hover {
+    background-color: #fcfffd;
+}
+
+#refreshButton i {
+    font-size: 16px;
+}
+
+/* Download Buttons */
+.download-buttons {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin-bottom: 10px;
+}
+
+.download-buttons button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5px; /* Space between buttons */
+    transition: background-color 0.3s ease;
+}
+
+.download-buttons button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.download-buttons button i {
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/* Add New Account Button */
+.add-account-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.add-account-btn:hover {
+    background-color: #45a049;
+}
+
+.add-account-btn i {
+    margin-right: 8px;
+}
+/* Add this CSS to your stylesheet */
+.fa-spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.refresh-icon {
+  background-color: #4CAF50; /* Green background color */
+  border: none;
+  color: white;
+  padding: 10px 15px; /* Adjust padding as needed */
+  text-align: center;
+  text-decoration: none;
+  display: flex; /* Enable flexbox for better icon/text alignment */
+  align-items: center; /* Vertically center icon and text */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  gap: 0.5em; /* Spacing between icon and text */
+}
+
+.refresh-icon:hover {
+  background-color: #3e8e41; /* Darker green on hover */
+}
+
+.refresh-icon i { /* Style the Font Awesome icon within the button */
+    margin-right: 5px; /* Adjust spacing between icon and text as needed */
+}
+
+
+
+
+</style>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="LOGO1.png" alt="Logo" width="40">
+            <span>ARMS</span>
+        </div>
+        <h2>Admin Dashboard</h2>
+        <button id="toggleSidebar" class="btn btn-sm btn-light">☰</button>
+        <ul>
+            <li onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+            </li>
+            <li onclick="window.location.href='admin.html'">
+                <i class="fas fa-user-friends"></i> <span>Farmers</span>
+            </li>
+            <li onclick="window.location.href='add-distribution.html'">
+                <i class="fas fa-clipboard-list"></i> <span>Distribution Records</span>
+            </li>
+            <li onclick="window.location.href='farmers-record.html'">
+                <i class="fas fa-seedling"></i> <span>Farmers Activities</span>
+            </li>
+            <li onclick="window.location.href='manage_users.html'">
+                <i class="fas fa-users-cog"></i> <span>User Management</span>
+            </li>
+            <li onclick="window.location.href='admin_password_management.html'">
+                <i class="fas fa-key"></i> <span>Password Management</span>
+            </li>
+            <li onclick="window.location.href='logout.php'">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </li>
+        </ul>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <h1><i class="fas fa-cogs"></i> Welcome to the Admin Dashboard</h1>
+    <h2></i> Manage data effectively and monitor progress seamlessly!</h2>
+    <h2>Farmers Records</h2>
+
+    <!-- Search Box for Approved Users -->
+    <input type="text" id="searchBar" placeholder="Search by name or RSBSA number" oninput="filterApprovedUsers()">
+
+    <!-- Sorting Icons -->
+    <div class="sort-icons">
+        <i class="fas fa-sort-amount-down" title="Sort Newest to Oldest" onclick="sortNewestToOldest()"></i>
+        <i class="fas fa-sort-alpha-down" title="Sort Alphabetically" onclick="sortAlphabetical()"></i>
+    </div>
+  
+        <h2>Approved Users by Barangay</h2>
+        <div class="buttons">
+            <button onclick="filterByBarangay('')">All</button>
+            <button onclick="filterByBarangay('Balacanas')">Balacanas</button>
+            <button onclick="filterByBarangay('Dayawan')">Dayawan</button>
+            <button onclick="filterByBarangay('Katipunan')">Katipunan</button>
+            <button onclick="filterByBarangay('Kimaya')">Kimaya</button>
+            <button onclick="filterByBarangay('Poblacion 1')">Poblacion 1</button>
+            <button onclick="filterByBarangay('Poblacion 2')">Poblacion 2</button>
+            <button onclick="filterByBarangay('Poblacion 3')">Poblacion 3</button>
+            <button onclick="filterByBarangay('San Martin')">San Martin</button>
+            <button onclick="filterByBarangay('Tambobong')">Tambobong</button>
+            <button onclick="filterByBarangay('Imelda')">Imelda</button>
+            <button onclick="filterByBarangay('Looc')">Looc</button>
+        </div>
+        <div class="download-buttons">
+            <button id="downloadButton" onclick="showDownloadOptions()">
+                <i class="fas fa-download"></i> Download
+            </button>
+            <button onclick="window.location.reload()" class="refresh-icon">
+                <i class="fas fa-sync-alt"></i> Refresh
+              </button>        </div>
+            <table class="data-table">  <!-- Added the class "data-table" -->
+                <thead>
+                    <tr>
+                        <th>RSBA Number</th>
+                        <th>Name</th>
+                        <th>Home Address</th>
+                        <th>Contact Number</th>
+                        <th>Ownership Types</th>
+                        <th>Land Sizes</th>
+                        <th>Land Locations</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody"></tbody>
+            </table>
+        </div>
+
+        <script>
+            let approvedUsers = [];
+            
+            fetch('fetch_approved_users.php')
+                .then(response => response.json())
+                .then(data => {
+                    approvedUsers = data;
+                    filterByBarangay('');
+                })
+                .catch(error => console.error('Error fetching data:', error));
+            
+            function filterByBarangay(barangay) {
+                const tableBody = document.getElementById('userTableBody');
+                tableBody.innerHTML = '';
+                
+                const filteredUsers = barangay ? approvedUsers.filter(user => user.homeAddress.includes(barangay)) : approvedUsers;
+                
+                filteredUsers.forEach(user => {
+                    const row = `<tr>
+                        <td>${user.rsbaNumber}</td>
+                        <td>${user.firstName} ${user.lastName}</td>
+                        <td>${user.homeAddress}</td>
+                        <td>${user.contactNumber}</td>
+                        <td>${user.ownership_types.join(', ')}</td>
+                        <td>${user.land_sizes.join(', ')}</td>
+                        <td>${user.land_locations.join(', ')}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            }
+ 
+
+function filterApprovedUsers() {
+    const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+    const tableBody = document.getElementById('userTableBody');
+    tableBody.innerHTML = ''; // Clear the table before updating
+
+    const filteredUsers = approvedUsers.filter(user => {
+        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+        return fullName.includes(searchTerm) || user.rsbaNumber.toLowerCase().includes(searchTerm);
+    });
+
+    filteredUsers.forEach(user => {
+        const row = `<tr>
+            <td>${user.rsbaNumber}</td>
+            <td>${user.firstName} ${user.lastName}</td>
+            <td>${user.homeAddress}</td>
+            <td>${user.contactNumber}</td>
+            <td>${user.ownership_types.join(', ')}</td>
+            <td>${user.land_sizes.join(', ')}</td>
+            <td>${user.land_locations.join(', ')}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+}
+async function refreshTable() {
+    try {
+        const response = await fetch('fetch_approved_users.php'); // Your server-side script
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        approvedUsers = data; // Update the global array with fresh data
+        filterByBarangay(''); // Re-render the table with the updated data
+    } catch (error) {
+        console.error('Error refreshing table:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong while refreshing the table!',
+        });
+    }
+}  
+// ... other functions ...
+
+async function loadData() {
+    try {
+        const response = await fetch('fetch_approved_users.php');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        approvedUsers = data.map(user => ({
+            ...user,
+            ownership_types: user.ownership_types || [], // Handle null/undefined
+            land_sizes: user.land_sizes || [],         // Handle null/undefined
+            land_locations: user.land_locations || []   // Handle null/undefined
+        }));
+        filterByBarangay('');
+    } catch (error) {
+        console.error('Error loading data:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong while loading data!',
+        });
+    }
+}
+
+
+function showDownloadOptions() {
+    if (approvedUsers.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No data to download',
+            text: 'Please load data first by refreshing the table.',
+        });
+        return;
+    }
+    Swal.fire({
+        title: 'Choose Download Format',
+        text: 'Select the format you wish to download',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Excel (.xlsx)',
+        cancelButtonText: 'PDF (.pdf)',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showCloseButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            downloadExcel();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            downloadPDF();
+        }
+    });
+}
+
+function downloadExcel() {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(approvedUsers); // Use json_to_sheet for better handling
+    XLSX.utils.book_append_sheet(wb, ws, 'Approved Users');
+    XLSX.writeFile(wb, 'Records.xlsx');
+}
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.text("Farmers", 14, 10);
+    
+    const tableColumn = ["RSBA Number", "Name", "Home Address", "Contact Number", "Ownership Types", "Land Sizes", "Land Locations"];
+    const tableRows = [];
+
+    approvedUsers.forEach(user => {
+        const rowData = [
+            user.rsbaNumber,
+            `${user.firstName} ${user.lastName}`,
+            user.homeAddress,
+            user.contactNumber,
+            user.ownership_types.join(', '),
+            user.land_sizes.join(', '),
+            user.land_locations.join(', ')
+        ];
+        tableRows.push(rowData);
+    });
+
+    doc.autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY: 20
+    });
+
+    doc.save('Records.pdf');
+}
+
+
+</script>
+    </body>
+    </html>
+    

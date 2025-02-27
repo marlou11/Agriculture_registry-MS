@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Distribution Records</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #388E3C;
+            padding: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #388E3C;
+        }
+
+        /* Content Container */
+        .content-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-section input {
+            padding: 8px;
+            width: 30%;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #388E3C;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Download Icon */
+        .download-icon {
+            font-size: 24px;
+            color: #0d0d0d;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .download-icon:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            table, th, td {
+                font-size: 12px;
+            }
+
+            .content-container {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="dashboard.html" class="back-btn">
+            <i class="fa fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Content Section: Filters -->
+    <div class="content-container">
+        <div class="filter-section">
+            <input type="text" id="batchIdFilter" placeholder="Filter by Batch ID">
+            <input type="text" id="distributedToFilter" placeholder="Filter by Distributed To">
+            <input type="date" id="dateFilter" placeholder="Filter by Date">
+        </div>
+
+        <!-- Download Icon -->
+        <i class="fa fa-download download-icon" id="downloadBtn" title="Download CSV"></i>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Batch Name</th>
+                    <th>Batch ID</th>
+                    <th>Distributed Quantity</th>
+                    <th>Distributed To</th>
+                    <th>Date Distributed</th>
+                </tr>
+            </thead>
+            <tbody id="distributionRecordsTableBody">
+                <!-- Records will be dynamically loaded here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.getElementById('distributionRecordsTableBody');
+            const distributionBatches = JSON.parse(localStorage.getItem('distributionBatches')) || [];
+            const selectedBatchType = localStorage.getItem('selectedBatchType'); // Get selected batch type from localStorage
+
+            // Filter input elements
+            const batchIdFilter = document.getElementById('batchIdFilter');
+            const distributedToFilter = document.getElementById('distributedToFilter');
+            const dateFilter = document.getElementById('dateFilter');
+
+            // Function to load filtered records
+            function loadFilteredRecords() {
+                tableBody.innerHTML = ''; // Clear existing table rows
+
+                const batchIdFilterValue = batchIdFilter.value.toLowerCase();
+                const distributedToFilterValue = distributedToFilter.value.toLowerCase();
+                const dateFilterValue = dateFilter.value;
+
+                distributionBatches.forEach(batch => {
+                    if (selectedBatchType && batch.batchName.toLowerCase() !== selectedBatchType) return; // Filter by batch type
+
+                    batch.distributions.forEach(distribution => {
+                        // Apply filters
+                        const matchBatchId = batch.batchId.toLowerCase().includes(batchIdFilterValue);
+                        const matchDistributedTo = distribution.distributedTo.toLowerCase().includes(distributedToFilterValue);
+                        const matchDate = dateFilterValue ? distribution.dateDistributed === dateFilterValue : true;
+
+                        if (matchBatchId && matchDistributedTo && matchDate) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${batch.batchName}</td>
+                                <td>${batch.batchId}</td>
+                                <td>${distribution.distributedQuantity}</td>
+                                <td>${distribution.distributedTo}</td>
+                                <td>${distribution.dateDistributed}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        }
+                    });
+                });
+            }
+
+            // Event listeners for filter inputs
+            batchIdFilter.addEventListener('input', loadFilteredRecords);
+            distributedToFilter.addEventListener('input', loadFilteredRecords);
+            dateFilter.addEventListener('change', loadFilteredRecords);
+
+            // Load filtered records when the page loads
+            loadFilteredRecords();
+
+            // Function to download table data as CSV
+            function downloadCSV() {
+                const rows = Array.from(tableBody.rows);
+                const csvContent = [];
+
+                // Get headers
+                const headers = ['Batch Name', 'Batch ID', 'Distributed Quantity', 'Distributed To', 'Date Distributed'];
+                csvContent.push(headers.join(','));
+
+                // Get data rows
+                rows.forEach(row => {
+                    const cells = Array.from(row.cells).map(cell => `"${cell.textContent}"`);
+                    csvContent.push(cells.join(','));
+                });
+
+                // Create CSV string
+                const csvString = csvContent.join('\n');
+
+                // Create a Blob from the CSV string
+                const blob = new Blob([csvString], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'distribution_records.csv';
+
+                // Trigger the download
+                link.click();
+            }
+
+            // Event listener for download icon
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', downloadCSV);
+        });
+    </script>
+
+</body>
+</html>

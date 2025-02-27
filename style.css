@@ -1,0 +1,813 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;1,500;1,600&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Rubik', sans-serif;
+}
+
+/*  Section home  */
+
+nav{
+    width: 100%;
+    height: 70px;
+    background-size: cover;
+}
+label.logo {
+  color: #ffffff;
+  font-size: 30px;
+  line-height: 70px;
+  font-weight: 500;
+  padding: 0;  /* Remove padding */
+  margin-left: 0;  /* Ensure no additional left margin */
+  text-align: left;  /* Align text to the left */
+}
+
+.icon{
+    height: 140px;
+    left: 200px;
+    top: 12px;
+}
+
+nav ul{
+    float: right;
+    margin-right: 100px;
+
+}
+
+nav ul li{
+    display: inline-block;
+    line-height: 70px; 
+    margin: 0px;
+}
+
+nav ul li a{
+    color: #080202;
+    font-size: 17px;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    border-radius: 3px;
+}
+a.active,a:hover{
+    background: #ffae00;
+    transition: .5s;
+}
+
+section{
+    height: 100vh;
+}
+
+section.home{
+    background: linear-gradient(to bottom, #d1f53200 25%, #4ed42d 90%, #0e8818 100%) transparent;
+    background-size: 100%;
+}
+
+section.home::before{
+    content:'';
+  
+}
+
+
+.Blogo{
+    height: 250px;
+}
+
+.header1{
+    padding-left: 15px;
+    font-size: 50px;
+    color: #e8efeb;
+    justify-items: center;
+   
+ 
+      color: white; /* White text */
+      text-shadow: 4px 4px 15px rgb(1, 1, 1); /* Larger dark green shadow */
+
+    
+}
+
+.headingsp{
+    font-size: 70px;
+}
+
+span{
+    padding: 0px;
+    margin: 0px;
+    color: hwb(110 12% 22%);
+    position: relative;
+    right: 63px;
+
+}
+
+p.frontp {
+  font-family: 'Rubik', sans-serif;
+  font-size: larger;
+  color: hwb(120 3% 78%);
+  margin-bottom: 20px;
+  line-height: 1.6rem;
+  text-align: center; /* Added this line */
+}
+
+
+
+  .btn:hover{
+    background-color: #67e26d;
+  }
+
+/*  Section home end  */
+
+/*  Section hiring  */
+
+section#hiring{
+    justify-content: center;
+    background: linear-gradient(to bottom, #00000000 2%, #00000000 15%, #84adf5 97%, #598ce4 100%);
+}
+
+.heading2{
+    font-size: 30px;
+    padding-top: 30px;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    top: 15px;
+}
+
+.one{
+    position: relative;
+    right: 356px; 
+}
+
+.three{
+    position: relative;
+    left: 356px;
+}
+
+.all{
+    position: relative;
+    top: 477px;
+    left: 1250px;
+}
+
+.carousel{
+    padding-right: 40px;
+}
+
+.carousel-wrapper {
+    height: 400px;
+    position: relative;
+    width: 300px;
+    display: block;
+    margin: 50px auto ;
+    border: 1px solid hsl(147, 81%, 34%) 97%
+  }
+  
+  .carousel-item {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px 50px;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
+  .arrow{
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 12px;
+  }
+  .arrow-prev {
+    left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(135deg);
+  
+  }
+  .arrow-next {
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+  
+  [id^= "item"] {
+    display: none;
+  }
+  .item-1 {
+    z-index: 2;
+    opacity: 1;
+    background-color: #11b80b;
+    background-size: cover;
+  }
+  .item-2 {
+    background-color: #ffffff;
+    background: url('ARMS LOGO.png');
+    background-size: cover;
+  }
+  .item-3 {
+    background-color: #ffffff;
+    background: url('img3.jpg');
+    background-size: cover;
+  }
+  
+  .item-4 {
+    z-index: 2;
+    opacity: 1;
+    background-color: #ffffff;
+    background-size: cover;
+  }
+
+  .item-5 {
+    background-color: #ffffff;
+    background: url('img3.jpg');
+    background-size: cover;
+  }
+
+  .item-6 {
+    background-color: #ffffff;
+    background: url('img3.jpg');
+    background-size: cover;
+  }
+
+  .item-7 {
+    z-index: 2;
+    opacity: 1;
+    background-color: #ffffff;
+    background-size: cover;
+  }
+
+  .item-8 {
+    background-color: #ffffff;
+    background: url('img3.jpg');
+    background-size: cover;
+  }
+
+  .item-9 {
+    background-color: #ffffff;
+    background: url('img3.jpg');
+    background-size: cover;
+  }
+  
+  *:target ~ .item-1{
+    opacity: 0;
+  }
+  #item-1:target ~ .item-1 {
+    opacity: 1;
+  
+  }
+  #item-2:target ~ .item-2, #item-3:target ~ .item-3 {
+    z-index: 3;
+    opacity: 1;
+  } 
+
+  *:target ~ .item-4{
+    opacity: 0;
+  }
+  #item-4:target ~ .item-4 {
+    opacity: 1;
+  
+  }
+  #item-5:target ~ .item-5, #item-6:target ~ .item-6 {
+    z-index: 3;
+    opacity: 1;
+  } 
+
+  *:target ~ .item-7{
+    opacity: 0;
+  }
+  #item-7:target ~ .item-7 {
+    opacity: 1;
+  
+  }
+  #item-8:target ~ .item-8, #item-9:target ~ .item-9 {
+    z-index: 3;
+    opacity: 1;
+  } 
+
+.display-flex{
+    justify-content: center;
+    display: flex;
+    position: relative;
+    bottom: 30px;
+}
+
+.content{
+    position: relative;
+    top: 150px;
+}
+
+.categories{
+    justify-content: center;
+    display: flex;
+    position: relative;
+    top: 30px;
+}
+
+/*  Section hiring end */
+
+section.about{
+  background: linear-gradient(to bottom, #07a722 0%, #f1f3f8 5%, #84aef500 50%, #61ffdf00 100%);
+}
+
+/*  main  */
+
+.heading3{
+    left: 200px;
+    height: 330px;
+    padding-top: 30px;
+    justify-content: center;
+    position: relative;
+    top: 15px;
+}
+
+.heading4{
+  
+  position: relative;
+  left: 850px;
+  bottom: 550px;
+  height: 320px;
+
+}
+
+.first-p{
+  width: 620px;
+  font-family: 'Rubik', sans-serif;
+  text-align: justify;
+  font-size: 17px;
+  color: #123;
+  margin-bottom: 20px;
+  line-height: 1.6rem;
+  position: relative;
+  left: 530px;
+  bottom: 210px;
+}
+
+.sec-p{
+  width: 630px;
+  font-family: 'Rubik', sans-serif;
+  text-align: justify;
+  font-size: 17px;
+  color: #123;
+  margin-bottom: 20px;
+  line-height: 1.6rem;
+  position: relative;
+  left: 200px;
+  bottom: 200px;
+}
+
+.looking{
+  display: inline-block;
+  padding-top: 50px;
+  padding-left: 100px;
+  padding-bottom: 30px;
+}
+
+.heading-pt{
+ padding-left:90px;
+ padding-bottom: 8px;
+}
+
+.heading-ft{
+  color: #084ab3;
+  padding-top: 50px;
+  padding-left:90px;
+  padding-bottom: 8px;
+ }
+
+.btn-pt{
+  display: inline-block;
+  line-height: 2rem;
+  font-weight: 500;
+  color: hsl(0, 7%, 97%);
+  background: hsl(130, 69%, 23%);
+  border: solid hsl(138, 62%, 29%);
+  border-radius: 0.5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.button-ft{
+  display: inline-block;
+  line-height: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: #ffce2d;
+  border: solid #ffce2d;
+  border-radius: 0.5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 0;
+  margin-right: 25px;
+}
+
+.cards{
+  display: flex;
+  padding-left: 90px;
+  color: hsl(153, 39%, 95%);
+  padding-bottom: 30px;
+
+}
+
+.cards2{
+  display: flex;
+  padding-left: 90px;
+  color: hsl(147, 81%, 34%) 97%
+
+}
+
+.cardbox{
+  height: 400px;
+  width: 300px;
+  margin-right: 30px;
+  background-color: hsl(128, 70%, 26%);
+  border: solid hsl(143, 61%, 24%);
+  border-width: 1px;
+  border-radius: 0.5rem;
+}
+
+.cardbox2{
+  height: 400px;
+  width: 300px;
+  margin-right: 30px;
+  background-color: #095000;
+  border: solid #016d21;
+  border-width: 1px;
+  border-radius: 0.5rem;
+}
+
+.job-title{
+  padding-top: 110px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.job-title, h3{
+  margin-bottom: 5px;
+}
+
+.requirments{
+  text-align: left;
+  padding-left: 8px;
+}
+
+.requirments, .p{
+  margin: 2px;
+}
+
+.getdirection-btn{
+  display: inline-block;
+  line-height: 2rem;
+  font-weight: 500;
+  color: #212529;
+  background: #FFC000;
+  border: solid #FFC000;
+  border-radius: 0.5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 28px;
+  margin-left: 70px;
+  margin-right: 25px;
+}
+
+.getdirection-btn2{
+  display: inline-block;
+  line-height: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: #084ab3;
+  border: solid #084ab3;
+  border-radius: 0.5rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 28px;
+  margin-left: 70px;
+  margin-right: 25px;
+}
+
+.footer{
+  width: 100%;
+  height: 130px;
+  border-width: 1px;
+  position: relative;
+  top: 1320px;
+}
+
+.footer2{
+  width: 100%;
+  height: 130px;
+  border-width: 1px;
+  position: relative;
+  top: 45px;
+}
+
+.footer3{
+  width: 100%;
+  height: 130px;
+  border-width: 1px;
+}
+
+.icon2{
+  height: 70px;
+  position: relative;
+  top: 35px;
+  left: 490px;
+}
+
+.h2-footer{
+  width: 200px;
+  font-size: 32px;
+  font-weight: 500;
+  position: relative;
+  left: 585px;
+  bottom: 18px;
+}
+
+.p-region{
+
+  width: 53px;
+  position: relative;
+  left: 745px;
+  bottom: 46px;
+}
+
+.bigx{
+  font-size: 32px;
+  font-weight: 500;
+  width: 50px;
+  position: relative;
+  left: 805px;
+  bottom: 75px;
+}
+
+.p-gusty{
+  width: 150px;
+  font-size: 14px;
+  position: relative;
+  left: 585px;
+  bottom: 80px;
+}
+ 
+/* modal*/
+
+input[type="checkbox"]{
+  display: none;
+}
+.container{
+  display: none;
+  position: relative;
+  bottom: 400px;
+  left: 115px;
+  background: #fff;
+  width: 410px;
+  padding: 30px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+#show:checked ~ .container{
+  display: block;
+}
+.container .close-btn{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.container .close-btn:hover{
+  color: #3498db;
+}
+.container .text{
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+}
+.container form{
+  margin-top: -20px;
+}
+.container form .data{
+  height: 45px;
+  width: 100%;
+  margin: 40px 0;
+}
+form .data label{
+  font-size: 18px;
+}
+form .data input{
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 17px;
+  border: 1px solid silver;
+}
+form .data input:focus{
+  border-color: #3498db;
+  border-bottom-width: 2px;
+}
+form .forgot-pass{
+  margin-top: -8px;
+}
+form .forgot-pass a{
+  color: #3498db;
+  text-decoration: none;
+}
+form .forgot-pass a:hover{
+  text-decoration: underline;
+}
+form .btn{
+  margin: 30px 0;
+  height: 45px;
+  width: 100%;
+  background-color: #ffae00;
+  border: #000000;
+  border-width: 2px;
+  position: relative;
+  overflow: hidden;
+}
+form .btn .inner{
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  z-index: -1;
+  background: #ffae00;
+  transition: all 0.4s;
+}
+form .btn:hover .inner{
+
+  left: 0;
+}
+form .btn button{
+  height: 100%;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+form .signup-link{
+  text-align: center;
+}
+form .signup-link a{
+  color: #3498db;
+  text-decoration: none;
+}
+form .signup-link a:hover{
+  text-decoration: underline;
+}
+
+/* Sign up */
+.signup-box {
+  width: 360px;
+  height: 620px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: transparent;
+  border-radius: 3px;
+}
+
+.login-box {
+  width: 360px;
+  height: 280px;
+  margin: auto;
+  border-radius: 3px;
+  background-color: white;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 15px;
+}
+
+h4 {
+  text-align: center;
+}
+
+
+form label {
+  display: flex;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+form input {
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 6px;
+  outline: none;
+}
+input[type="button"] {
+  width: 320px;
+  height: 35px;
+  margin-top: 20px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 18px;
+}
+
+.para-2 {
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  margin-top: -10px;
+}
+.para-2 a {
+  color: #49c1a2;
+}
+
+.signup{
+  background: linear-gradient(to bottom, #61ffdf00 25%, #598ce4 90%, #4472C4 100%) transparent;
+  
+}
+
+.btnn{
+  margin: 30px 0;
+  height: 45px;
+  width: 100%;
+  background-color: #ffae00;
+  border: #000000;
+  border-width: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Existing styles... */
+
+.logo-container {
+  text-align: center; /* Center the logo and heading */
+  margin: 0 auto; /* Center the container horizontally */
+  width: 80%; /* Adjust width as needed */
+  max-width: 800px; /* Set a maximum width for responsiveness */
+}
+
+.Blogo {
+  display: block; /* Make the logo a block element for easier centering */
+  margin: 20px auto; /* Add some margin around the logo */ /* Add margin */
+  max-width: 100%; /* Ensure the logo doesn't exceed its container */
+}
+
+.header1 {
+  text-align: center; /* Center the heading */
+  margin-bottom: 20px; /* Add some margin below the heading */
+}
+
+.btn {
+  display: block; /* Make the button a block element */
+  margin: 0 auto; /* Center the button horizontally */
+  width: 200px; /* Set the desired width */
+}
+/*Existing styles*/
+
+.center-container {
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically (optional, if you want vertical centering as well) */
+  width: 80%; /* Adjust as needed for responsiveness */
+  margin: 0 auto; /* Center the container itself */
+}
+
+.center-container p {
+  margin-bottom: 10px; /* Adjust spacing between paragraph and button */
+}
+
+.btn {
+  width: 200px; /* Adjust button width as needed */
+}

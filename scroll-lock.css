@@ -1,0 +1,8 @@
+
+
+/* Lock scroll on the entire page */
+body, html, footer {
+    overflow: hidden;  /* Prevents scrolling */
+    height: 100%;      /* Ensure the page takes up the full height */
+  }
+  

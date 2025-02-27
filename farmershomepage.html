@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer's Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .profile-picture-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-picture-container img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 200px;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .profile-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Farmer's Portal</h1>
+        <div class="profile-picture-container">
+            <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+            <div class="profile-info" id="profileInfo">
+                <!-- Logged-in user's details -->
+                <p><strong>Name:</strong> <span id="userName"></span></p>
+                <p><strong>RSBA Number:</strong> <span id="userRSBA"></span></p>
+                <p><strong>Address:</strong> <span id="userAddress"></span></p>
+                <p><strong>Contact:</strong> <span id="userContact"></span></p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Welcome, <span id="userWelcomeName"></span>!</h2>
+        <p>Your profile information is shown above. Update your information if needed.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileInfo = document.getElementById('profileInfo');
+            const profilePicture = document.getElementById('profilePicture');
+            const userWelcomeName = document.getElementById('userWelcomeName');
+
+            // Toggle profile info visibility
+            profilePicture.addEventListener('click', () => {
+                profileInfo.style.display = profileInfo.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Fetch logged-in user details from the session
+            axios.get('session_user.php') // This endpoint should return session data
+                .then(response => {
+                    const user = response.data;
+                    if (user) {
+                        document.getElementById('userName').textContent = `${user.first_name} ${user.last_name}`;
+                        document.getElementById('userRSBA').textContent = user.rsba_number;
+                        document.getElementById('userAddress').textContent = user.address;
+                        document.getElementById('userContact').textContent = user.contact_number;
+                        userWelcomeName.textContent = user.first_name;
+                        profilePicture.src = user.profile_picture || 'default-profile.png';
+                    } else {
+                        alert("You are not logged in. Redirecting to login...");
+                        window.location.href = "index.html";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    alert("An error occurred while loading your profile. Please log in again.");
+                    window.location.href = "index.html";
+                });
+        });
+    </script>
+</body>
+</html>

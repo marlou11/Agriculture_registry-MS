@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="style.css" rel="stylesheet">
+  <link href="scroll-lock.css" rel="stylesheet">
+  <link rel="icon" href="LOGO1.png" type="image/png">
+  <link href="tepl.css" rel="stylesheet">
+    <title>Agriculture Registry and Monitoring System</title>
+
+  </head>
+    <style>
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+  
+      .modal-content {
+       background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
+        overflow: hidden;  /* Prevents content from overflowing */
+      }
+  
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+  
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+  
+      .error-msg {
+        color: red;
+        margin: 10px 0;
+      }
+
+      .header1 {
+      padding-left: 15px;
+      font-size: 50px;
+      color: #e8efeb;
+      justify-items: center;
+      color: white;
+      text-shadow: 4px 4px 15px rgb(1, 1, 1);
+  }
+/* Form Container */
+form {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Input Fields */
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form input[type="text"]:not(:last-child) {
+    margin-bottom: 20px; /* Adjust margin between RSBA and password input fields */
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+form button[type="submit"] {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Placeholder Styling */
+form input::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    form {
+        padding: 15px 20px;
+    }
+    form input[type="text"],
+    form input[type="password"] {
+        font-size: 13px;
+    }
+    form button[type="submit"] {
+        font-size: 14px;
+    }
+}
+.fpage {
+    width: 800px;
+    margin-top: 65px;
+    margin-left: 360px;
+    text-align: center;
+}
+
+.btn {
+  width: 200px; /* Set your desired width here */
+  /* other styles... */
+}
+      
+    </style>
+
+<body>
+  <!-- Front page -->
+  <div class="scroll-control">
+    <section class="home" id="home">
+
+      <!-- Header/navbar -->
+      <header>
+      <nav>
+        <img class="icon" src="LOGO1.png" alt="Corn Farmers Registry Logo">
+    
+        <ul>
+          <li><a href="index.html">Home</a></li>
+    
+          <li><a href="Sign-up.html">Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+
+      <div class="fpage">
+        <img class="Blogo" src="LOGO1.png" alt="logo">
+        <h1 class="header1">Agriculture Registry and Monitoring System <span class="headingsp"></span></h1>
+        <div class="center-container">
+          <p class="frontp">Manage and track Farmer's records, activities and distributed government support services for corn farmers.</p>
+          <button class="btn" onclick="showFarmerLogin()">Login</button>
+        </div>
+
+    </main>
+
+      <!-- Farmer Login Modal -->
+      <div id="farmerModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('farmerModal')">&times;</span>
+          <h2> Login</h2>
+          <form action="login.php" method="POST">
+            <input type="text" name="rsba_number" placeholder="RSBA Number" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" name="login">Login</button>
+        </form>
+        <div id="message"></div>
+      </div>
+
+  
+
+      <!-- Header/navbar End -->
+    </section>
+
+    <!-- Other sections here... -->
+ 
+  </div>
+
+  <script>
+        function showFarmerLogin() {
+      document.getElementById("farmerModal").style.display = "block";
+    }
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+      const farmerModal = document.getElementById("farmerModal");
+      if (event.target == farmerModal) {
+        farmerModal.style.display = "none";
+      }
+    };
+
+    // Function to close modals
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('#farmerModal form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('login.php', { // Ensure this matches the correct path
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful!',
+                    text: 'Redirecting...',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                }).then(() => {
+                    window.location.href = data.redirect; // Redirect after success
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.message
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Error',
+                text: 'An error occurred while processing your request.'
+            });
+            console.error('Login Error:', error);
+        });
+    });
+});
+
+  </script>
+</body>
+
+
+<footer>
+ <!-- Contact Information Section -->
+ <div class="footer-section">
+  <h3>Contact Us</h3>
+  <p>Email: <a href="mailto:info@cornfarmersregistry.com">info@cornfarmersregistry.com</a></p>
+</div>
+<div class="footer-container">
+<!-- Add the main description about the system here -->
+<div class="footer-section about">
+  <h3>About The System</h3>
+  <p>
+    Agriculture Registry and Monitoring System is a digital platform designed to streamline the management and distribution of government support services to corn farmers. The system serves as a centralized registry where farmers can sign up and update their personal, farm, and crop details. It also tracks the delivery of government assistance, including cash subsidies, farm inputs like fertilizers and seeds, farm equipment, and other support services. The system provides an easy and efficient way for corn farmers to register and document their farming activities, tools for monitoring and managing the distribution of resources to farmers, and improves transparency and accuracy in reporting on the assistance provided.
+  </p>
+</div>
+
+<!-- Social Media Section -->
+<div class="footer-section">
+  <h3>Follow Us</h3>
+  <ul class="socials">
+    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+    <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+    <li><a href="https://community.cornfarmersregistry.com" target="_blank">Community</a></li>
+  </ul>
+</div>
+
+<!-- Feedback Section -->
+<div class="footer-section">
+  <h3>Feedback</h3>
+  <p>We'd love to hear from you! <a href="feedback.html">Give us your feedback.</a></p>
+</div>
+</div>
+
+</footer>
+
+</html>

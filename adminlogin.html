@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ARMS</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #137731;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #137731;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 120px;
+            margin-right: 80px;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 1.2rem;
+        }
+
+        .nav-right a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 500px;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 250px; /* Adds space below the navbar */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error, .success {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="LOGO1.png" alt="Project Logo" class="logo">
+            <h1 style="color: white;">ARMS</h1>
+        </div>
+        <div class="nav-right">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // Default credentials
+        const defaultCredentials = {
+            username: "DA.gov@2025",
+            password: "admin123"
+        };
+
+        // Login form submission handling
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const messageDiv = document.getElementById("message");
+
+            // Verify credentials
+            if (username === defaultCredentials.username && password === defaultCredentials.password) {
+                messageDiv.textContent = "Login successful!";
+                messageDiv.className = "success";
+                // Redirect to the dashboard or another page
+                window.location.href = "dashboard.html";
+            } else {
+                messageDiv.textContent = "Invalid username or password.";
+                messageDiv.className = "error";
+            }
+        });
+    </script>
+    </script>
+</body>
+</html>

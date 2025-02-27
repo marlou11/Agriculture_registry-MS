@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Include Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s;
+    overflow-y: auto; /* Allow scrolling in sidebar if content overflows */
+}
+
+.sidebar .logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 40px;
+    height: auto;
+}
+
+.sidebar .logo span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-top: 10px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    border-bottom: 1px solid #34495e;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar ul li:hover {
+    background-color: #34495e;
+}
+
+.sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+body.collapsed .sidebar {
+    width: 60px;
+}
+
+body.collapsed .sidebar .logo,
+body.collapsed .sidebar h2 {
+    display: none;
+}
+
+/* Main Content Area */
+.dashboard-container {
+    flex-grow: 1; /* Ensure content takes up remaining space */
+    margin-left: 270px; /* Add a small gap between the sidebar and content */
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Two columns: left wider for charts */
+    gap: 30px;
+    height: 100vh;
+    overflow: auto; /* Allow content scrolling */
+}
+
+/* Combined Chart and Summary Container */
+.chart-summary-container {
+    display: flex;
+    justify-content: space-between; /* Distribute space between chart box and summary box */
+    gap: 30px;                      /* Space between the chart box and summary box */
+    flex-wrap: wrap;                 /* Allows wrapping of items when needed (on small screens) */
+}
+
+/* Chart Box Section */
+.chart-box {
+    flex: 2;                         /* Chart box takes up more space */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;                     /* Ensure chart box takes the available space */
+}
+
+/* Summary Box Section */
+.summary-container {
+    flex: 1;                         /* Summary box takes up less space than the chart box */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;                       /* Space between individual summary boxes */
+    width: 100%;                     /* Ensure it takes up available space */
+}
+
+/* Individual Summary Box Styling */
+.summary-box {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease-in-out;
+}
+
+.summary-box:hover {
+    background: linear-gradient(135deg, #388E3C, #2C6B2F);
+}
+
+/* Button styling for overall records button */
+#viewRecordsButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#viewRecordsButton:hover {
+    background-color: #45a049;
+}
+
+/* Layout for charts below the Barangay Summary */
+.charts-row {
+    display: flex;
+    gap: 20px;                     /* Add some space between the charts */
+}
+
+/* Individual Chart Section */
+.chart {
+    flex: 1;                        /* Each chart takes equal space */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure the button below charts is centered */
+#viewRecordsButton {
+    margin-top: 20px;   /* Some space above the button */
+    display: block;
+    width: 100%;        /* Full width of the parent */
+}
+
+/* Responsive Adjustment for Smaller Screens */
+@media (max-width: 768px) {
+    .chart-summary-container {
+        flex-direction: column;  /* Stack items vertically on smaller screens */
+    }
+
+    .chart-box, .summary-container {
+        flex: 1;   /* Both chart and summary boxes take equal space when stacked */
+    }
+
+    .charts-row {
+        flex-direction: column; /* Stack charts vertically on smaller screens */
+    }
+
+    .chart {
+        width: 100%;             /* Ensure each chart takes full width when stacked */
+        margin-bottom: 20px;     /* Space between the charts */
+    }
+}
+
+/* Overall container styling to ensure elements are placed correctly */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+}
+
+.dashboard-container .main-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Make sure the chart-box and summary-container don't overflow */
+.chart-summary-container {
+    flex-wrap: wrap;  /* Allow wrapping on smaller screens */
+    margin: 0;
+    padding: 0;
+}
+
+/* Adjust the button size on smaller screens */
+#viewRecordsButton {
+    width: 100%; /* Ensures button takes the full width on small screens */
+}
+
+/* Ensure summary-boxes and chart-boxes adjust properly */
+.summary-box, .chart-box {
+    max-width: 80%;
+}
+.chart-button {
+    background: none; /* Remove button background */
+    border: none; /* Remove button border */
+    padding: 0; /* Remove padding to make it look like a link */
+    font-size: 16px;
+    color: #2980b9; /* Set link color */
+    cursor: pointer; /* Make cursor look like a link */
+    text-align: left; /* Align text to the left */
+}
+
+.chart-button .link-text {
+    text-decoration: underline; /* Underline the text */
+}
+
+.chart-button:hover .link-text {
+    color: #3498db; /* Change color on hover */
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="LOGO1.png" alt="Logo">
+            <span>ARMS</span>
+        </div>
+        <h2>Admin Dashboard</h2>
+        <div id="toggleSidebar" class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul id="menuList">
+            <li id="dashboardMenu" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </li>
+            <li id="farmersMenu" onclick="window.location.href='admin.html'">
+                <i class="fas fa-user-friends"></i> Farmers
+            </li>
+            <li id="distribution-records" onclick="window.location.href='add-distribution.html'">
+                <i class="fas fa-clipboard-list"></i> Distribution Records
+            </li>
+            <li id="farmersActivitiesMenu" onclick="window.location.href='farmers-record.html'">
+                <i class="fas fa-seedling"></i> Farmers Activities
+            </li>
+            <li id="userManagementMenu" onclick="window.location.href='manage_users.html'">
+                <i class="fas fa-users-cog"></i> User Management
+            </li>
+            <li id="logoutMenu" onclick="window.location.href='logout.php'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </li>
+        </ul>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="main-content-container">
+            <!-- Combined Chart and Summary Box Container -->
+            <div class="chart-summary-container">
+                
+                <!-- Chart Box Section -->
+                <div class="chart-box">
+                    <!-- Barangay-wise Activity Summary (on top) -->
+                    <button onclick="window.location.href='farmers-record.html'" class="chart-button">
+                        Barangay-wise Activity Summary
+                    </button>
+                    <canvas id="barangaySummaryChart"></canvas>
+            
+                    <!-- Distribution Summary and Farmers Activities (below) -->
+                    <div class="charts-row">
+                        <!-- Distribution Summary Chart -->
+                        <div class="chart">
+                            <button onclick="window.location.href='summary.html'" class="chart-button">
+                                <span class="link-text">Click here to view overall records</span>
+
+                            </button>
+                            <canvas id="distributionChart"></canvas>
+                        </div>
+            
+                        <!-- Farmers Activities in Villanueva Chart -->
+                        <div class="chart">
+                            <button onclick="window.location.href='farmers-record.html'" class="chart-button">
+                              
+                                <span class="link-text">  Farmers Activities in Villanueva</span>
+                            </button>
+                            <canvas id="activityTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Summary Box Section -->
+                <div class="summary-container">
+                    <button class="overall-button" id="viewRecordsButton">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                    
+                    <div class="summary-box" id="cashSummary">
+                        <h3>Cash</h3>
+                        <p><strong>Total Batches:</strong> <span id="cashTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="cashTotalDistributed">0</span></p>
+                    </div>
+                    <div class="summary-box" id="seedsSummary">
+                        <h3>Seeds</h3>
+                        <p><strong>Total Batches:</strong> <span id="seedsTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="seedsTotalDistributed">0</span></p>
+                    </div>
+                    <div class="summary-box" id="fertilizerSummary">
+                        <h3>Fertilizer</h3>
+                        <p><strong>Total Batches:</strong> <span id="fertilizerTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="fertilizerTotalDistributed">0</span></p>
+                    </div>
+                    <div class="summary-box" id="pesticideSummary">
+                        <h3>Pesticide</h3>
+                        <p><strong>Total Batches:</strong> <span id="pesticideTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="pesticideTotalDistributed">0</span></p>
+                    </div>
+                    <div class="summary-box" id="herbicideSummary">
+                        <h3>Herbicide</h3>
+                        <p><strong>Total Batches:</strong> <span id="herbicideTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="herbicideTotalDistributed">0</span></p>
+                    </div>
+                    <div class="summary-box" id="rodenticideSummary">
+                        <h3>Rodenticide</h3>
+                        <p><strong>Total Batches:</strong> <span id="rodenticideTotalBatches">0</span></p>
+                        <p><strong>Total Distributed:</strong> <span id="rodenticideTotalDistributed">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+  
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const summaryBoxes = document.querySelectorAll('.summary-box');
+            const cashTotalBatches = document.getElementById('cashTotalBatches');
+            const cashTotalDistributed = document.getElementById('cashTotalDistributed');
+            const seedsTotalBatches = document.getElementById('seedsTotalBatches');
+            const seedsTotalDistributed = document.getElementById('seedsTotalDistributed');
+            const fertilizerTotalBatches = document.getElementById('fertilizerTotalBatches');
+            const fertilizerTotalDistributed = document.getElementById('fertilizerTotalDistributed');
+            const pesticideTotalBatches = document.getElementById('pesticideTotalBatches');
+            const pesticideTotalDistributed = document.getElementById('pesticideTotalDistributed');
+            const herbicideTotalBatches = document.getElementById('herbicideTotalBatches');
+            const herbicideTotalDistributed = document.getElementById('herbicideTotalDistributed');
+            const rodenticideTotalBatches = document.getElementById('rodenticideTotalBatches');
+            const rodenticideTotalDistributed = document.getElementById('rodenticideTotalDistributed');
+            const viewRecordsButton = document.getElementById('viewRecordsButton');
+            const distributionChartCanvas = document.getElementById('distributionChart');
+            const activityTypeChartCanvas = document.getElementById('activityTypeChart');
+            const barangaySummaryChartCanvas = document.getElementById('barangaySummaryChart');
+
+            // Fetch distribution data from localStorage
+            const distributionBatches = JSON.parse(localStorage.getItem('distributionBatches')) || [];
+
+            
+
+            // Function to update summary totals
+            function updateSummary() {
+                const totals = {
+                    cash: { batches: 0, distributed: 0 },
+                    seeds: { batches: 0, distributed: 0 },
+                    fertilizer: { batches: 0, distributed: 0 },
+                    pesticide: { batches: 0, distributed: 0 },
+                    herbicide: { batches: 0, distributed: 0 },
+                    rodenticide: { batches: 0, distributed: 0 },
+                };
+
+                // Calculate totals
+                distributionBatches.forEach(batch => {
+                    batch.distributions.forEach(distribution => {
+                        const batchName = batch.batchName.toLowerCase();
+                        if (totals[batchName]) {
+                            totals[batchName].batches++;
+                            totals[batchName].distributed += distribution.distributedQuantity;
+                        }
+                    });
+                });
+
+                // Update summary boxes with totals
+                cashTotalBatches.textContent = totals.cash.batches;
+                cashTotalDistributed.textContent = totals.cash.distributed;
+                seedsTotalBatches.textContent = totals.seeds.batches;
+                seedsTotalDistributed.textContent = totals.seeds.distributed;
+                fertilizerTotalBatches.textContent = totals.fertilizer.batches;
+                fertilizerTotalDistributed.textContent = totals.fertilizer.distributed;
+                pesticideTotalBatches.textContent = totals.pesticide.batches;
+                pesticideTotalDistributed.textContent = totals.pesticide.distributed;
+                herbicideTotalBatches.textContent = totals.herbicide.batches;
+                herbicideTotalDistributed.textContent = totals.herbicide.distributed;
+                rodenticideTotalBatches.textContent = totals.rodenticide.batches;
+                rodenticideTotalDistributed.textContent = totals.rodenticide.distributed;
+            }
+
+            // Event listener for summary box clicks
+            summaryBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    const selectedBatchType = box.id.replace('Summary', '').toLowerCase();
+                    localStorage.setItem('selectedBatchType', selectedBatchType); // Store selection in localStorage
+                    window.location.href = 'filtered-records.html'; // Redirect to the filtered records page
+                });
+            });
+
+            // Event listener for "View Overall Records" button
+            viewRecordsButton.addEventListener('click', () => {
+                console.log('View Records button clicked');  // Debugging log
+                localStorage.removeItem('selectedBatchType'); // Reset batch type filter
+                window.location.href = 'filtered-records.html'; // Show all records on the filtered records page
+            });
+
+            // Load summary data when the page loads
+            updateSummary();
+        });
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const distributionChartCanvas = document.getElementById('distributionChart');
+        const activityTypeChartCanvas = document.getElementById('activityTypeChart');
+        const barangaySummaryChartCanvas = document.getElementById('barangaySummaryChart');
+
+        const distributionBatches = JSON.parse(localStorage.getItem('distributionBatches')) || [];
+        const barangayNames = ["Balacanas", "Dayawan", "Katipunan", "Kimaya", "Poblacion 1", "Poblacion 2", "Poblacion 3", "San Martin", "Tambobong", "Imelda", "Looc"];
+        const activityTypes = ["Land Preparation", "Seeding", "Weeding", "Fertilizing", "Spraying", "Harvesting"];
+        const activityCounts = {};
+
+        barangayNames.forEach(barangay => {
+            const activitiesByBarangay = JSON.parse(localStorage.getItem(`activitiesByBarangay-${barangay}`)) || {};
+            activityCounts[barangay] = {};
+            activityTypes.forEach(type => {
+                activityCounts[barangay][type] = (activitiesByBarangay[type] && activitiesByBarangay[type].length) ? activitiesByBarangay[type].length : 0;
+            });
+        });
+
+        const activityTypeData = activityTypes.map(type => {
+            let totalCount = 0;
+            barangayNames.forEach(barangay => {
+                totalCount += activityCounts[barangay][type];
+            });
+            return totalCount;
+        });
+
+        const barangayActivityData = {
+            labels: barangayNames,
+            datasets: activityTypes.map((type, index) => ({
+                label: type,
+                data: barangayNames.map(barangay => activityCounts[barangay][type]),
+                backgroundColor: `rgba(${(index * 40) % 255}, ${(index * 60) % 255}, ${(index * 80) % 255}, 0.6)`,
+                borderColor: `rgba(${(index * 40) % 255}, ${(index * 60) % 255}, ${(index * 80) % 255}, 1)`,
+                borderWidth: 1
+            }))
+        };
+
+        const distributionTotals = distributionBatches.reduce((totals, batch) => {
+            batch.distributions.forEach(distribution => {
+                if (!totals[batch.batchName]) {
+                    totals[batch.batchName] = 0;
+                }
+                totals[batch.batchName] += distribution.distributedQuantity;
+            });
+            return totals;
+        }, {});
+
+        const distributionLabels = Object.keys(distributionTotals);
+        const distributionData = Object.values(distributionTotals);
+
+        // Create the Activity Type Summary Chart (Pie)
+        new Chart(activityTypeChartCanvas, {
+            type: 'pie',
+            data: {
+                labels: activityTypes,
+                datasets: [{
+                    data: activityTypeData,
+                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#FF5722', '#009688', '#673AB7'],
+                    hoverBackgroundColor: ['#388E3C', '#FFB300', '#1976D2', '#D32F2F', '#00796B', '#512DA8']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.label}: ${context.raw} activities`
+                        }
+                    }
+                }
+            }
+        });
+
+       // Create the Barangay-wise Activity Summary Chart (Bar)
+        new Chart(barangaySummaryChartCanvas, {
+            type: 'bar',
+            data: barangayActivityData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            // Automatically adjust the scale based on data
+                            max: Math.max(...barangayActivityData.datasets.map(dataset => Math.max(...dataset.data))) + 10,  // Add a buffer
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.dataset.label}: ${context.raw} activities`
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // Create the Distribution Summary Pie Chart
+        new Chart(distributionChartCanvas, {
+            type: 'pie',
+            data: {
+                labels: distributionLabels,
+                datasets: [{
+                    data: distributionData,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} units`
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

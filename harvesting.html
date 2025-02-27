@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="ARMS LOGO.png" type="image/png">
+    <link rel="stylesheet" href="tepl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+      
+    <title>Farmers Portal</title>
+    <style>
+        /* General Reset */
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+:root {
+    --primary-color: #4CAF50; /* Green */
+    --secondary-color: #f0f0f0; /* Light Gray */
+    --accent-color: #2196F3; /* Blue */ /* Added accent color */
+    --spacing-unit: 15px;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    --font-size-base: 1rem;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around; /* Even spacing */
+    width: 90%; /* Adjust width */
+    max-width: 1200px; /* Max width for larger screens */
+    margin: 20px auto; /* Center horizontally */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+body {
+    display: flex;
+    min-height: 100vh; /* Ensure full viewport height */
+    background-color: var(--secondary-color);
+    color: #333;
+    font-family: 'Arial', sans-serif; /* Specify font family */
+}
+
+
+.profile-container {
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: var(--spacing-unit);
+    box-shadow: var(--shadow);
+    width: 30%;
+    min-width: 300px;
+}
+
+.profile-container img {
+    width: 150px; /* Larger profile image */
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--primary-color); /* Use CSS variable */
+    margin-bottom: var(--spacing-unit);
+}
+.profile-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.profile-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.profile-details strong {
+    color: var(--primary-color); /* Use CSS variable */
+}
+
+.profile-container button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.profile-container button:hover {
+    background-color: darken(var(--primary-color), 10%); /* Darker on hover */
+}
+
+#profile-picture-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Add some spacing */
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#profile-picture-form button[type="submit"]:hover {
+    background-color: #45a049;
+}
+/* Responsive adjustments */
+@media (max-width: 1000px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .profile-container, .activity-container {
+        width: 100%;
+    }
+    .activity-box {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 600px) {
+    .activity-box {
+        flex: 0 0 calc(100% - 20px);
+    }
+}
+
+
+.menu {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu a:hover {
+    background-color: #1abc9c; /* Light teal */
+    transform: scale(1.1);
+}
+
+.menu a:active {
+    background-color: #16a085; /* Darker teal */
+}
+
+@media (max-width: 600px) {
+    .menu {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .menu a {
+        display: block;
+        width: 100%;
+    }
+}
+
+.first-p {
+    color: white;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+}
+        /* Form container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: var(--spacing-unit);
+            box-shadow: var(--shadow);
+            width: 50%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            align-self: flex-start; /* Align labels to the left */
+        }
+
+        .form-container input, .form-container select, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: var(--spacing-unit);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+        }
+
+        .form-container button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .form-container button:hover {
+            background-color: darken(var(--primary-color), 10%); /* Darker on hover */
+        }
+
+        /* Form buttons */
+        .form-container .cancel-btn {
+            background-color: #ccc;
+            margin-left: 10px;
+        }
+
+        .form-container .cancel-btn:hover {
+            background-color: darken(#ccc, 10%);
+        }
+
+           /* Add Activity Button Container */
+           .add-activity-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .add-activity-container button {
+            background-color: var(--accent-color); /* Use accent color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-activity-container button:hover {
+            background-color: darken(var(--accent-color), 10%); /* Darker on hover */
+        }
+    </style>
+</head>
+<body>
+
+        <header>
+       <nav class="nav-bar">  <!-- Added class for styling -->
+            <div class="brand">
+                <img class="icon" src="LOGO1.png" alt="Corn Farmers Registry Logo">
+            </div>
+            <div class="menu">
+                <a href="#profile-section"></i> Profile</a>
+                <a href="#activities-section"></i> Activities</a>
+                <a href="#timeline-section"></i> Timeline</a>
+                <a href="logout.php"></i> Logout</a>
+            </div>
+        </nav>
+        <div class="main-container">  <!-- Added main-container -->
+    
+
+            <div class="profile-container">
+                <h2>Profile Information</h2>
+                <img id="profilePic" src="default-avatar.png" alt="Profile Picture">
+                <p><strong>Name:</strong> <span id="name"></span></p>
+                <p><strong>RSBA Number:</strong> <span id="rsbaNumber"></span></p>
+                <p><strong>Contact:</strong> <span id="contact"></span></p>
+                <p><strong>Address:</strong> <span id="address"></span></p>
+                <p><strong>Barangay:</strong> <span id="barangay"></span></p>
+                
+                <!-- Land Ownership Details -->
+                <p><strong>Land Ownership Type:</strong> <span id="landType"></span></p>
+                <p><strong>Land Size:</strong> <span id="landSize"></span> hectares</p>
+                <p><strong>Land Location:</strong> <span id="landLocation"></span></p>
+                
+        
+                <h3>Upload Profile Picture</h3>
+                <form id="profileForm" enctype="multipart/form-data">
+                    <input type="file" name="profileImage" id="profileImage" required>
+                    <button type="submit">Upload</button>
+                </form>
+                </div>
+                <p id="uploadMessage"></p>
+                <div class="form-container">
+                    <h2>Harvesting Form</h2>
+                    <form id="harvestingForm" enctype="multipart/form-data">
+                        <label>Harvest Quantity:</label>
+                        <input type="number" name="harvest_quantity" required>
+                
+                        <label>Harvesting Method:</label>
+                        <select name="harvesting_method">
+                            <option value="manual">Manual</option>
+                            <option value="mechanical">Mechanical</option>
+                        </select>
+                
+                        <label>Date of Harvest:</label>
+                        <input type="date" name="harvest_date" required>
+                
+                        <label>Photo Documentation:</label>
+                        <input type="file" name="photo_documentation" accept="image/*" required>
+                
+                        <button type="submit">Submit</button>
+                        <button type="button" onclick="cancelForm()">Cancel</button>
+                    </form>
+                </div>
+</div>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+    fetchUserProfile();
+});
+
+function fetchUserProfile() {
+    fetch('fetch_logged_in_user.php')
+        .then(response => response.json())
+        .then(user => {
+            if (user.success) {
+                // Ensure elements exist before setting values
+                if (document.getElementById("rsbaNumber")) 
+                    document.getElementById("rsbaNumber").innerText = user.rsbaNumber;
+                
+                if (document.getElementById("name")) 
+                    document.getElementById("name").innerText = user.firstName + " " + user.lastName;
+                
+                if (document.getElementById("address")) 
+                    document.getElementById("address").innerText = user.homeAddress;
+                
+                if (document.getElementById("contact")) 
+                    document.getElementById("contact").innerText = user.contactNumber;
+                
+                if (document.getElementById("barangay")) 
+                    document.getElementById("barangay").innerText = user.barangay;
+                
+                if (document.getElementById("landType")) 
+                    document.getElementById("landType").innerText = user.landType || "N/A";
+                
+                if (document.getElementById("landSize")) 
+                    document.getElementById("landSize").innerText = user.landSize || "0";
+                
+                if (document.getElementById("landLocation")) 
+                    document.getElementById("landLocation").innerText = user.landLocation || "N/A";
+                
+                if (user.profileImage && document.getElementById("profilePic")) {
+                    document.getElementById("profilePic").src = user.profileImage;
+                }
+            } else {
+                Swal.fire("Error", "Failed to fetch user profile", "error");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching profile:", error);
+            Swal.fire("Error", "An error occurred while fetching profile", "error");
+        });
+}
+
+// Profile Picture Upload
+document.getElementById("profileForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    let formData = new FormData();
+    let fileInput = document.getElementById("profileImage");
+
+    if (fileInput.files.length === 0) {
+        Swal.fire("Warning", "Please select a file!", "warning");
+        return;
+    }
+
+    formData.append("profileImage", fileInput.files[0]);
+
+    fetch("upload_profile_picture.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("profilePic").src = data.image;
+            Swal.fire("Success", "Profile picture uploaded successfully!", "success");
+        } else {
+            Swal.fire("Error", data.message, "error");
+        }
+    })
+    .catch(error => {
+        console.error("Error uploading file:", error);
+        Swal.fire("Error", "An error occurred while uploading the file", "error");
+    });
+});
+document.getElementById("harvestingForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let formData = new FormData(this);
+
+    fetch("harvesting.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Expect JSON response
+    .then(data => {
+        if (data.status === "success") {
+            Swal.fire("Success", data.message, "success");
+            this.reset();
+        } else {
+            Swal.fire("Error", data.message, "error");
+        }
+    })
+    .catch(error => {
+        Swal.fire("Error", "An error occurred while submitting the data", "error");
+    });
+});
+
+function cancelForm() {
+    window.location.href = 'farmersportal.html';
+}
+    </script>
+
+
+</body>
